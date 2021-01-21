@@ -33,6 +33,6 @@ print ("Y: ",coordinateY)
 print(type(coordinateX))
 print(type(coordinateY))
 
-plt.scatter(coordinateX,coordinateY)
+plt.plot(coordinateX,coordinateY)
 plt.ylabel('some numbers')
 plt.show()
