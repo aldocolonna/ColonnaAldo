@@ -6,31 +6,44 @@ import string
 import numpy as np
 import matplotlib.pyplot as plt
 import os 
+from PIL import Image 
+from PIL import ImageTk
 
 def grafici():
     f = open("dati.txt", 'r')
-    corX = []
-    corY = []
+
+    coordinateX = []
+    coordinateY = []
+
     for riga in f:
-        valori = str(f.readline())       
+        valori = str(f.readline())  
+        Nval = len(valori)          
         valori = valori.strip('\n') 
         valori = valori.split(',')  
         valori = list(valori)       
         print(valori)
-        corX.append(int(valori[0])) 
-        corY.append(int(valori[1])) 
-    f.close()
-    print ("X: ",corX)
-    print ("Y: ",corY)
-    corX.sort()
-    corY.sort()
-    plt.scatter(corX,corY)
-    plt.ylabel('Y')
-    plt.xlaber('X')
+        coordinateX.append(int(valori[0])) 
+        coordinateY.append(int(valori[1])) 
+
+    f.close()  
+
+    print ("X: ",coordinateX)
+    print ("Y: ",coordinateY)
+
+    coordinateX.sort()
+    coordinateY.sort()
+
+    print("liste ordinate:") 
+    print ("X: ",coordinateX)
+    print ("Y: ",coordinateY)
+
+    print(type(coordinateX))
+    print(type(coordinateY))
+
+    plt.plot(coordinateX,coordinateY)
+    plt.ylabel('some numbers')
     plt.savefig("immagine_grafico.jpg")
-    plt.show()
-
-
+   
 def Scrittore():
     f = open("dati.txt", 'w')
     coppia = ""
@@ -45,9 +58,12 @@ def Scrittore():
 def creafile():
     if box_di_testo.get():
         nome=box_di_testo.get()
-        grafici()
         Scrittore()
+        grafici()
         os.rename('dati.txt',nome)
+        foto_grafico= tk.PhotoImage(file='immagine_grafico.jpg')
+        foto= tk.Label(interfaccia, foto_grafico.pack, side=BOTTOM)
+        
 
     else:
         errore= tk.Label(interfaccia, text=("Inserisci un nome!"), font=("helvetica",40), background="red")
@@ -66,9 +82,5 @@ box_di_testo.grid(row=1, column=0, padx=20)
 
 bottone_crea_file = tk.Button(text=("Crea file"), command=creafile)
 bottone_crea_file.grid(row=2, column=0, padx=20)
-
-foto_grafico= tk.PhotoImage(file='immagine_grafico.jpg')
-foto= tk.Label(interfaccia, foto_grafico.pack)
-foto.pack(side=BOTTOM)
 
 interfaccia.mainloop()
