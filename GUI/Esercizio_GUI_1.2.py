@@ -6,8 +6,6 @@ import string
 import numpy as np
 import matplotlib.pyplot as plt
 import os 
-from PIL import Image 
-from PIL import ImageTk
 
 def grafici():
     f = open("dati.txt", 'r')
