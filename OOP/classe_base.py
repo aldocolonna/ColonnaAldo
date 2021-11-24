@@ -43,10 +43,10 @@ class calcComb():
             if carattere[i]>1: 
                 count+=1 
                 nCaratteri += carattere[i] 
-
-        return count 
-        return nCaratteri
-        return carattere
+  
+        Variabili_anagrammi = [count,nCaratteri,carattere]
+        
+        return Variabili_anagrammi
 
     def confUtil(self,lingua):
         
@@ -73,7 +73,7 @@ class calcComb():
                 f *= n 
                 n -= 1
             
-            return f
+        return f
     def coeffBinom(n, k):
         if k == n:
             cb = 1
@@ -85,11 +85,9 @@ class calcComb():
             cb = 0
         
         else:
-            cb = calcComb.fattoriale(n) 
-            // 
-            (calcComb.fattoriale(n) * calcComb.fattoriale(n-k))
+            cb = calcComb.fattoriale(n) // (calcComb.fattoriale(n) * calcComb.fattoriale(n-k))
     
-    
+        return cb
     # PERMUTAZIONI
 
     def nPermutSenzaRip(self):
