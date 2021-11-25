@@ -1,17 +1,24 @@
 # classe calcolo combinatorio
 from itertools import permutations
+# all'interno della classe vi sono alcune variabili ad esempio "n" doppie poichè n è presente sia come variabile di istanza e viene usata in alcuni metodi,
+# mentre in altre funzioni viene data in input come ad esempio nella funzione che restituisce il coefficiente binomiale
 class calcComb():
-
-    def selezione_lingua(self):
-        lingua = {"Italiano":"word.italian.txt"}
-        lingua["Italiano"]  #in questo punto potrebbe essere integrato un'input per chiedere all'utente la lingua del gioco
-        return lingua 
+    '''
+    lingua = input() #questa potrebbe anche essere inizializzata come attributo di classe, indeciso se di classe o di instanaza 
+    '''
     def __init__(self, stringa):
 
         self.__N = len(stringa)
         self.__stringa = stringa
         self.__listStringa = list(stringa)
-
+        self.__anagrammi = anagrammi(self.__stringa)    
+        self.__presenza = None #questa potrebbe anche essere inizializzata come attributo di classe, indeciso se di classe o di instanaza 
+    '''
+    def selezione_lingua(self):
+        lingua = {"Italiano":"word.italian.txt"}
+        lingua["Italiano"]  #in questo punto potrebbe essere integrato un'input per chiedere all'utente la lingua del gioco
+        return lingua #da discutere come usare questa funzione, fino a quel punto la escludo dalle variabili prese dal confutil
+    '''
     def get_stringa(self):
         return self.__stringa
 
@@ -48,7 +55,7 @@ class calcComb():
         
         return Variabili_anagrammi
 
-    def confUtil(self,lingua):
+    '''def confUtil(self,lingua):
         
         f = open(lingua, 'r')
         
@@ -59,6 +66,20 @@ class calcComb():
                 Presenza == True
 
         return Presenza
+    '''
+    # ho cambiato questa funzione in quanto il confutil sarebbe più utile se prendesse in input la parola da verificare
+    def confUtil(self,word):
+            
+        f = open('r')   #f = open(lingua, 'r')
+        
+        riga = f.readline()
+        self.__presenza == False
+        for riga in f:
+            if word == riga[:-1]:
+                self.__presenza == True
+
+        return self.__presenza
+    
     def fattoriale(n):
         n=int(n)
         f = 0 
@@ -74,6 +95,7 @@ class calcComb():
                 n -= 1
             
         return f
+    
     def coeffBinom(n, k):
         if k == n:
             cb = 1
@@ -88,6 +110,7 @@ class calcComb():
             cb = calcComb.fattoriale(n) // (calcComb.fattoriale(n) * calcComb.fattoriale(n-k))
     
         return cb
+    
     # PERMUTAZIONI
 
     def nPermutSenzaRip(self):
@@ -99,7 +122,13 @@ class calcComb():
 
         return calcComb.fattoriale(self.__N)/calcComb.charRipetuti(self.__count)
 
-    def permutSenzaRip(self):
+    def anagrammi(self):
+        '''
+        word -> deve contenere la stringa da analizzare
+        carattere -> è il dictionary all'interno del quale salvare le informazioni 
+        count -> contiene il numero totale di ripetizioni
+        nCaratteri -> contiene il numero di caratteri che si ripetono
+        '''
         listapermutazioni = list(itertools.permutations(self.__stringa))
         temp = ''
         anagrammi = []
@@ -130,13 +159,6 @@ class calcComb():
 
         return self.__N**k
 
-    def dispSemplSenzaRip(self):
-        '''
-        generare e restituire la lista delle disposizioni semplici SENZA ripetizione
-        '''
-        return 0
-
-
     def dispSemplConRip(self):
         '''
         generare e restituire la lista delle disposizioni semplici CON ripetizione
@@ -165,4 +187,20 @@ class calcComb():
         generare e restituire la lista delle combinazioni CON ripetizione
         '''
         return 0
+    # PROBABILITA'
 
+    def probConfUtil(self):
+        # qui basta tirarsi fuori il numero di casi favorevoli usando il metodo confutil per sapere quanti degli anagrammi esistono
+        # e dividerlo per il numero totale di anagrammi che si ottiene facendo il len della tupla degli anagrammi
+        #wip
+        casifav = 0
+        for i in self.__anagrammi: 
+            Vtemp = calcComb.confUtil(i)
+            if Vtemp == False:
+                None
+            elif Vtemp == True:
+                casifav += 1
+        
+        Prob = casifav/(len(self.__anagrammi))
+        pass
+    
