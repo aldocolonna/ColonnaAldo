@@ -1,5 +1,5 @@
 # classe calcolo combinatorio
-from itertools import permutations
+from itertools import *
 # all'interno della classe vi sono alcune variabili ad esempio "n" doppie poichè n è presente sia come variabile di istanza e viene usata in alcuni metodi,
 # mentre in altre funzioni viene data in input come ad esempio nella funzione che restituisce il coefficiente binomiale
 class calcComb():
@@ -26,8 +26,8 @@ class calcComb():
         return self.__listStringa
 
     def setStringa(self):
-        self.__stringa = stringa
-        return self.__stringa
+        self.__stringa = str
+        
 
     def charRipetuti(self):
 
@@ -67,8 +67,8 @@ class calcComb():
 
         return Presenza
     '''
-    # ho cambiato questa funzione in quanto il confutil sarebbe più utile se prendesse in input la parola da verificare
-    def confUtil(self,word):
+    
+    def confUtilD(self,word):  #verifica se la parola presa in input come attributo di istanza è presente nel dizionario
             
         f = open('r')   #f = open(lingua, 'r')
         
@@ -122,7 +122,8 @@ class calcComb():
 
         return calcComb.fattoriale(self.__N)/calcComb.charRipetuti(self.__count)
 
-    def anagrammi(self):
+    def anagrammi(self): #permutazioni senza ripetizioni
+        import itertools
         '''
         word -> deve contenere la stringa da analizzare
         carattere -> è il dictionary all'interno del quale salvare le informazioni 
@@ -143,27 +144,36 @@ class calcComb():
         return anagrammi 
 
     def permutConRip(self):
-        '''
-        generare e restituire la lista di permutazioni CON ripetizione
-        '''
         return 0
 
     # DISPOSIZIONI
 
     def nDispSemplSenzaRip(self,k):
        if self.__N >= k:
-
-        return calcComb.fattoriale(self.__N) / calcComb.fattoriale(self.__N-k)
+           return calcComb.fattoriale(self.__N) / calcComb.fattoriale(self.__N-k)
+       else:
+           print("Si tratta di disposizini semplici!!! n>k")
+        
 
     def nDispSemplConRip(self,k):
 
         return self.__N**k
 
     def dispSemplConRip(self):
-        '''
-        generare e restituire la lista delle disposizioni semplici CON ripetizione
-        '''
-        return 0
+        import itertools
+        
+        listapermutazioni = list(itertools.permutations(self.__stringa))
+        temp = ''
+        disp = []
+        for i in listapermutazioni:
+            for carattere in i:
+                
+                temp += carattere 
+
+            disp.append(temp)
+            
+            temp = ''
+        return disp 
 
     # COMBINAZIONI
 
@@ -176,17 +186,30 @@ class calcComb():
         return calcComb.fattoriale(self.__N+k-1) / (calcComb.fattoriale(k) * calcComb.fattoriale(self.__N-1))
 
 
-    def combSenzaRip(self):
-        '''
-        generare e restituire la lista delle combinazioni SENZA ripetizione
-        '''
-        return 0
+    def combSenzaRip(self,k):
+        import itertools
+        listacombinazioni = list(itertools.combinations(self.__stringa, k))
+        temp = ''
+        comb = []
+        for i in listacombinazioni:
+            for carattere in i:
+                temp += carattere 
+            comb.append(temp)
+            temp = ''
+        return comb
 
-    def combConRip(self):
-        '''
-        generare e restituire la lista delle combinazioni CON ripetizione
-        '''
-        return 0
+
+    def combConRip(self,k):
+        import itertools
+        listacombinazioni = list(itertools.combinations_with_replacement(self.__stringa, k))
+        temp = ''
+        comb = []
+        for i in listacombinazioni:
+            for carattere in i:
+                temp += carattere 
+            comb.append(temp)
+            temp = ''
+        return comb
     # PROBABILITA'
 
     def probConfUtil(self):
