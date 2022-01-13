@@ -1,7 +1,28 @@
 # classe calcolo combinatorio
+# link file SRS: https://docs.google.com/document/d/1UbxKWaDN-DuHFWTtjGtcsY323sjho0LahW45FWliaH4/edit?usp=sharing
 from itertools import *
 # all'interno della classe vi sono alcune variabili ad esempio "n" doppie poichè n è presente sia come variabile di istanza e viene usata in alcuni metodi,
 # mentre in altre funzioni viene data in input come ad esempio nella funzione che restituisce il coefficiente binomiale
+def anagrammi(self): 
+        import itertools
+        '''
+        word -> deve contenere la stringa da analizzare
+        carattere -> è il dictionary all'interno del quale salvare le informazioni 
+        count -> contiene il numero totale di ripetizioni
+        nCaratteri -> contiene il numero di caratteri che si ripetono
+        '''
+        listapermutazioni = list(itertools.permutations(self.__stringa))
+        temp = ''
+        anagrammi = []
+        for i in listapermutazioni:
+            for carattere in i:
+                
+                temp += carattere 
+
+            anagrammi.append(temp)
+            
+            temp = ''
+        return anagrammi 
 class calcComb():
     '''
     lingua = input() #questa potrebbe anche essere inizializzata come attributo di classe, indeciso se di classe o di instanaza 
@@ -122,14 +143,8 @@ class calcComb():
 
         return calcComb.fattoriale(self.__N)/calcComb.charRipetuti(self.__count)
 
-    def anagrammi(self): #permutazioni senza ripetizioni
+    def PermutSenzaRip(self):
         import itertools
-        '''
-        word -> deve contenere la stringa da analizzare
-        carattere -> è il dictionary all'interno del quale salvare le informazioni 
-        count -> contiene il numero totale di ripetizioni
-        nCaratteri -> contiene il numero di caratteri che si ripetono
-        '''
         listapermutazioni = list(itertools.permutations(self.__stringa))
         temp = ''
         anagrammi = []
